@@ -33,7 +33,7 @@ jobs:
           & msbuild @arguments 2>&1 | Tee-Object -FilePath msbuild.log
           $buildExit = $LASTEXITCODE
           if ($buildExit -ne 0) {
-            $errors = @(Select-String -Path msbuild.log -Pattern ' error ' -SimpleMatch)
+            $errors = @(Select-String -Path msbuild.log -Pattern '\berror\s+[A-Z]+[0-9]+\b')
             if ($errors.Count -eq 0) {
               $errors = @((Get-Content msbuild.log -Tail 40) -join "`n")
             }

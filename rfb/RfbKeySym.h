@@ -25,6 +25,8 @@
 #ifndef __RFBKEYSYM_H__
 #define __RFBKEYSYM_H__
 
+#include <string>
+
 #include "RfbKeySymListener.h"
 #include "util/Keymap.h"
 #include "log-writer/LogWriter.h"
