@@ -19,13 +19,38 @@ jobs:
       - uses: microsoft/setup-msbuild@v2
 
       - name: Build tvnviewer
-        shell: cmd
-        run: >-
-          msbuild tightvnc2017.sln /t:tvnviewer /m
-          /p:Configuration=Release
-          /p:Platform=${{ matrix.platform }}
-          /p:PlatformToolset=v143
-          /p:WindowsTargetPlatformVersion=10.0
+        shell: pwsh
+        run: |
+          $arguments = @(
+            'tightvnc2017.sln'
+            '/t:tvnviewer'
+            '/m'
+            '/p:Configuration=Release'
+            '/p:Platform=${{ matrix.platform }}'
+            '/p:PlatformToolset=v143'
+            '/p:WindowsTargetPlatformVersion=10.0'
+          )
+          & msbuild @arguments 2>&1 | Tee-Object -FilePath msbuild.log
+          $buildExit = $LASTEXITCODE
+          if ($buildExit -ne 0) {
+            $errors = @(Select-String -Path msbuild.log -Pattern ' error ' -SimpleMatch)
+            if ($errors.Count -eq 0) {
+              $errors = @((Get-Content msbuild.log -Tail 40) -join "`n")
+            }
+            foreach ($errorLine in $errors) {
+              $message = $errorLine.ToString().Replace('%', '%25').Replace("`r", '%0D').Replace("`n", '%0A')
+              Write-Output "::error title=MSBuild::$message"
+            }
+            exit $buildExit
+          }
+
+      - name: Upload failed build log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: msbuild-log-${{ matrix.platform }}
+          path: msbuild.log
+          if-no-files-found: error
 
       - name: Upload viewer
         uses: actions/upload-artifact@v4
