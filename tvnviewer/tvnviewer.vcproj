@@ -649,6 +649,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\UnixLoginDialog.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\BuildTime.cpp"
 				>
 			</File>
@@ -749,6 +753,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ViewerUnixLoginAuthHandler.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ViewerWindow.cpp"
 				>
 			</File>
@@ -764,6 +772,14 @@
 			</File>
 			<File
 				RelativePath=".\AuthenticationDialog.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UnixLoginDialog.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UnixLoginResource.h"
 				>
 			</File>
 			<File
@@ -867,6 +883,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ViewerUnixLoginAuthHandler.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ViewerWindow.h"
 				>
 			</File>
@@ -918,6 +938,10 @@
 			</File>
 			<File
 				RelativePath=".\tvnviewer.rc"
+				>
+			</File>
+			<File
+				RelativePath=".\UnixLoginDialog.rc"
 				>
 			</File>
 		</Filter>

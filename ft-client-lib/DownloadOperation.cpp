@@ -295,7 +295,10 @@ void DownloadOperation::processFile()
       gotoNext();
       return ;
     case CopyFileEventListener::TFE_APPEND:
-      m_fileOffset = targetFileInfo.getSize();
+      // Defend the protocol layer even if a custom UI returns APPEND.
+      if (m_resumeSupported) {
+        m_fileOffset = targetFileInfo.getSize();
+      }
       break;
     case CopyFileEventListener::TFE_CANCEL:
       if (!isTerminating()) {

@@ -29,6 +29,7 @@ FileTransferOperation::FileTransferOperation(LogWriter *logWriter)
 : m_logWriter(logWriter),
   m_sender(0),
   m_replyBuffer(0),
+  m_resumeSupported(false),
   m_isTerminating(false)
 {
 }
@@ -45,6 +46,11 @@ void FileTransferOperation::setRequestSender(FileTransferRequestSender *sender)
 void FileTransferOperation::setReplyBuffer(FileTransferReplyBuffer *replyBuffer)
 {
   m_replyBuffer = replyBuffer;
+}
+
+void FileTransferOperation::setResumeSupported(bool supported)
+{
+  m_resumeSupported = supported;
 }
 
 void FileTransferOperation::terminate()

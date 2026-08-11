@@ -353,8 +353,12 @@ void UploadOperation::processFile()
       case CopyFileEventListener::TFE_OVERWRITE:
         break;
       case CopyFileEventListener::TFE_APPEND:
-        initialFileOffset = remoteFileInfo->getSize();
-        m_totalBytesCopied += initialFileOffset;
+        // A custom UI may still request append. Never put a non-zero offset
+        // on the wire unless the negotiated capabilities make resume safe.
+        if (m_resumeSupported) {
+          initialFileOffset = remoteFileInfo->getSize();
+          m_totalBytesCopied += initialFileOffset;
+        }
         break;
       case CopyFileEventListener::TFE_SKIP:
         m_totalBytesCopied += localFileInfo->getSize();

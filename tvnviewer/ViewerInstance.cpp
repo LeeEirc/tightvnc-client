@@ -30,15 +30,16 @@
 ViewerInstance::ViewerInstance(WindowsApplication *application,
                                ConnectionData *condata,
                                const ConnectionConfig *conConf)
-: m_conConf(*conConf),
-  m_condata(*condata),
-  m_socket(0),
+: m_condata(*condata),
+  m_conConf(*conConf),
   m_viewerWnd(application,
               &m_condata,
               &m_conConf,
               ViewerConfig::getInstance()->getLogger()),
+  m_viewerCore(ViewerConfig::getInstance()->getLogger()),
   m_vncAuthHandler(&m_condata),
-  m_viewerCore(ViewerConfig::getInstance()->getLogger())
+  m_unixLoginAuthHandler(&m_condata),
+  m_socket(0)
 {
 }
 
@@ -46,15 +47,16 @@ ViewerInstance::ViewerInstance(WindowsApplication *application,
                                ConnectionData *condata,
                                const ConnectionConfig *conConf,
                                SocketIPv4 *socket)
-: m_conConf(*conConf),
-  m_condata(*condata),
-  m_socket(socket),
+: m_condata(*condata),
+  m_conConf(*conConf),
   m_viewerWnd(application,
               &m_condata,
               &m_conConf,
               ViewerConfig::getInstance()->getLogger()),
+  m_viewerCore(ViewerConfig::getInstance()->getLogger()),
   m_vncAuthHandler(&m_condata),
-  m_viewerCore(ViewerConfig::getInstance()->getLogger())
+  m_unixLoginAuthHandler(&m_condata),
+  m_socket(socket)
 {
 }
 
@@ -104,6 +106,7 @@ void ViewerInstance::start()
   m_viewerWnd.setFileTransfer(&m_fileTransfer);
 
   m_vncAuthHandler.addAuthCapability(&m_viewerCore);
+  m_unixLoginAuthHandler.addAuthCapability(&m_viewerCore);
 
   m_fileTransfer.addCapabilities(&m_viewerCore);
 

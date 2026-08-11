@@ -21,6 +21,9 @@
     <ClCompile Include="AuthHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="UnixLoginAuthenticationHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="CapsContainer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -132,6 +135,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AuthHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UnixLoginAuthenticationHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CapsContainer.h">

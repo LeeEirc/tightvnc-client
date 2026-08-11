@@ -37,6 +37,7 @@ const TCHAR ViewerCmdLine::LISTEN[] = _T("listen");
 const TCHAR ViewerCmdLine::HOST[] = _T("host");
 const TCHAR ViewerCmdLine::PORT[] = _T("port");
 const TCHAR ViewerCmdLine::PASSWORD[] = _T("password");
+const TCHAR ViewerCmdLine::USERNAME[] = _T("username");
 const TCHAR ViewerCmdLine::SHOW_CONTROLS[] = _T("showcontrols");
 const TCHAR ViewerCmdLine::VIEW_ONLY[] = _T("viewonly");
 const TCHAR ViewerCmdLine::USE_CLIPBOARD[] = _T("useclipboard");
@@ -111,6 +112,7 @@ void ViewerCmdLine::parse()
     HOST,
     PORT,
     PASSWORD,
+    USERNAME,
     SHOW_CONTROLS,
     VIEW_ONLY,
     USE_CLIPBOARD,
@@ -157,6 +159,7 @@ void ViewerCmdLine::parse()
       throw CommandLineFormatException(StringTable::getString(IDS_ERROR_COMMAND_LINE));
   }
   parsePassword();
+  parseUnixLoginCredentials();
   parseEncoding();
   parseMouseShape();
   parseMouseCursor();
@@ -245,6 +248,21 @@ void ViewerCmdLine::parsePassword()
 {
   if (isPresent(PASSWORD)) {
     m_conData->setPlainPassword(&m_options[PASSWORD]);
+  }
+}
+
+void ViewerCmdLine::parseUnixLoginCredentials()
+{
+  if (!isPresent(USERNAME)) {
+    return;
+  }
+
+  m_conData->setUnixLoginUsername(&m_options[USERNAME]);
+  if (isPresent(PASSWORD)) {
+    // Keep the complete command-line password for this process only. The
+    // legacy VNC password above is still stored in its eight-byte format.
+    m_conData->setUnixLoginCredentials(&m_options[USERNAME],
+                                       &m_options[PASSWORD]);
   }
 }
 

@@ -29,10 +29,11 @@
 #include <stdio.h>
 
 FileExistDialog::FileExistDialog()
-: m_controlsInitialized(false), 
+: m_controlsInitialized(false),
   m_newFileInfo(NULL),
-  m_existingFileInfo(NULL), 
-  m_canAppend(true)
+  m_existingFileInfo(NULL),
+  m_canAppend(false),
+  m_isAppendSupported(false)
 {
   setResourceId(ftclient_fileExistDialog);
   resetDialogResultValue();
@@ -63,11 +64,23 @@ void FileExistDialog::setFilesInfo(FileInfo *existingFileInfo, FileInfo *newFile
   _ASSERT(m_newFileInfo != NULL);
   _ASSERT(m_existingFileInfo != NULL);
 
-  m_canAppend = (m_existingFileInfo->getSize() < m_newFileInfo->getSize());
+  m_canAppend = m_isAppendSupported &&
+                (m_existingFileInfo->getSize() < m_newFileInfo->getSize());
 
   if (m_controlsInitialized) {
     updateGui(newFileInfo, &m_newSizeLabel, &m_newModTimeLabel);
     m_fileNameLabel.setText(pathToFileCaption);
+    m_appendButton.setEnabled(m_canAppend);
+  }
+}
+
+void FileExistDialog::setAppendSupported(bool supported)
+{
+  m_isAppendSupported = supported;
+  m_canAppend = supported && m_existingFileInfo != NULL &&
+                m_newFileInfo != NULL &&
+                (m_existingFileInfo->getSize() < m_newFileInfo->getSize());
+  if (m_controlsInitialized) {
     m_appendButton.setEnabled(m_canAppend);
   }
 }

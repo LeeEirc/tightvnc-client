@@ -200,6 +200,7 @@ void FileTransferCore::executeOperation(FileTransferOperation *newOperation)
 
   m_currentOperation->setRequestSender(m_sender);
   m_currentOperation->setReplyBuffer(m_replyBuffer);
+  m_currentOperation->setResumeSupported(m_supportedOps.isMD5Supported());
   m_currentOperation->addListener(this);
 
   m_fileTransferListeners->addListener(m_currentOperation);

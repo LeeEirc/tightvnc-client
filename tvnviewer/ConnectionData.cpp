@@ -33,6 +33,7 @@
 ConnectionData::ConnectionData()
 : m_isEmpty(true),
   m_isSetPassword(false),
+  m_isSetUnixLoginCredentials(false),
   m_isIncoming(false)
 {
 }
@@ -40,6 +41,7 @@ ConnectionData::ConnectionData()
 ConnectionData::ConnectionData(const ConnectionData &connectionData)
 : m_isEmpty(connectionData.m_isEmpty),
   m_isSetPassword(connectionData.m_isSetPassword),
+  m_isSetUnixLoginCredentials(connectionData.m_isSetUnixLoginCredentials),
   m_isIncoming(connectionData.m_isIncoming)
 {
   if (!connectionData.isEmpty()) {
@@ -48,6 +50,15 @@ ConnectionData::ConnectionData(const ConnectionData &connectionData)
   if (m_isSetPassword) {
     m_defaultPassword = connectionData.m_defaultPassword;
   }
+  m_unixLoginUsername = connectionData.m_unixLoginUsername;
+  if (m_isSetUnixLoginCredentials) {
+    m_unixLoginPassword = connectionData.m_unixLoginPassword;
+  }
+}
+
+ConnectionData::~ConnectionData()
+{
+  resetUnixLoginCredentials();
 }
 
 void ConnectionData::setIncoming(bool isIncoming)
@@ -73,6 +84,62 @@ bool ConnectionData::isSetPassword() const
 void ConnectionData::resetPassword()
 {
   m_isSetPassword = false;
+}
+
+StringStorage ConnectionData::getUnixLoginUsername() const
+{
+  return m_unixLoginUsername;
+}
+
+void ConnectionData::getUnixLoginCredentials(StringStorage *username,
+                                              StringStorage *password) const
+{
+  *username = m_unixLoginUsername;
+  *password = m_unixLoginPassword;
+}
+
+void ConnectionData::setUnixLoginUsername(const StringStorage *username)
+{
+  resetUnixLoginPassword();
+  if (username == 0) {
+    m_unixLoginUsername.setString(_T(""));
+  } else {
+    m_unixLoginUsername = *username;
+  }
+}
+
+void ConnectionData::setUnixLoginCredentials(const StringStorage *username,
+                                             const StringStorage *password)
+{
+  if (username == 0 || password == 0) {
+    resetUnixLoginCredentials();
+    return;
+  }
+  resetUnixLoginCredentials();
+  m_unixLoginUsername = *username;
+  m_unixLoginPassword = *password;
+  m_isSetUnixLoginCredentials = true;
+}
+
+bool ConnectionData::isSetUnixLoginCredentials() const
+{
+  return m_isSetUnixLoginCredentials;
+}
+
+void ConnectionData::resetUnixLoginCredentials()
+{
+  resetUnixLoginPassword();
+  m_unixLoginUsername.setString(_T(""));
+}
+
+void ConnectionData::resetUnixLoginPassword()
+{
+  if (m_unixLoginPassword.getSize() != 0) {
+    SecureZeroMemory(const_cast<TCHAR *>(m_unixLoginPassword.getString()),
+                     m_unixLoginPassword.getSize());
+  }
+  m_unixLoginPassword.setString(_T(""));
+  m_isSetUnixLoginCredentials = false;
 }
 
 void ConnectionData::setHost(const StringStorage *host)

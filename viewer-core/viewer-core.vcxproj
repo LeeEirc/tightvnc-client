@@ -237,6 +237,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AuthHandler.cpp" />
+    <ClCompile Include="UnixLoginAuthenticationHandler.cpp" />
     <ClCompile Include="CapabilitiesManager.cpp" />
     <ClCompile Include="CapsContainer.cpp" />
     <ClCompile Include="CoreEventsAdapter.cpp" />
@@ -276,6 +277,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AuthHandler.h" />
+    <ClInclude Include="UnixLoginAuthenticationHandler.h" />
     <ClInclude Include="CapabilitiesManager.h" />
     <ClInclude Include="CapsContainer.h" />
     <ClInclude Include="CoreEventsAdapter.h" />

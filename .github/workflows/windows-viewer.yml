@@ -1,0 +1,37 @@
+name: Windows Viewer
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-2022
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [Win32, x64]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: microsoft/setup-msbuild@v2
+
+      - name: Build tvnviewer
+        shell: cmd
+        run: >-
+          msbuild tightvnc2017.sln /t:tvnviewer /m
+          /p:Configuration=Release
+          /p:Platform=${{ matrix.platform }}
+          /p:PlatformToolset=v143
+          /p:WindowsTargetPlatformVersion=10.0
+
+      - name: Upload viewer
+        uses: actions/upload-artifact@v4
+        with:
+          name: tvnviewer-${{ matrix.platform }}
+          path: |
+            Release/tvnviewer.exe
+            x64/Release/tvnviewer.exe
+          if-no-files-found: error

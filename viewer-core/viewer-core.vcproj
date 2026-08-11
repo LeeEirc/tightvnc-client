@@ -669,6 +669,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\UnixLoginAuthenticationHandler.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\CapabilitiesManager.cpp"
 				>
 			</File>
@@ -752,6 +756,10 @@
 			>
 			<File
 				RelativePath=".\AuthHandler.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UnixLoginAuthenticationHandler.h"
 				>
 			</File>
 			<File

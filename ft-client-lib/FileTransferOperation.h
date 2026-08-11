@@ -63,6 +63,9 @@ public:
 
   void setReplyBuffer(FileTransferReplyBuffer *replyBuffer);
 
+  // Enables non-zero offsets only when both peers advertised MD5 support.
+  void setResumeSupported(bool supported);
+
   //
   // Start executing of operation.
   // Method must be overrided by child classes.
@@ -134,6 +137,8 @@ protected:
 
   FileTransferRequestSender *m_sender;
   FileTransferReplyBuffer *m_replyBuffer;
+
+  bool m_resumeSupported;
 
   bool m_isTerminating;
 };

@@ -1003,6 +1003,7 @@ bool ViewerWindow::onAuthError(WPARAM wParam)
         m_requiresReconnect = true;
         ConnectionData *connectionData = new ConnectionData(*m_conData);
         connectionData->resetPassword();
+        connectionData->resetUnixLoginPassword();
         ConnectionConfig *connectionConfig = new ConnectionConfig(*m_conConf);
         m_application->postMessage(TvnViewer::WM_USER_RECONNECT,
                                    (WPARAM)connectionData,

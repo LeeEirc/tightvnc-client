@@ -51,6 +51,8 @@ public:
   void setFilesInfo(FileInfo *existingFileInfo, FileInfo *newFileInfo,
                     const TCHAR *pathToFileCaption);
 
+  void setAppendSupported(bool supported);
+
   void resetDialogResultValue();
 
 protected:
@@ -106,6 +108,7 @@ protected:
   Control m_appendButton;
 
   bool m_canAppend;
+  bool m_isAppendSupported;
 };
 
 #endif

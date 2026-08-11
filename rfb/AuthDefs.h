@@ -42,10 +42,12 @@ class AuthDefs
 public:
   static const UINT32 NONE = 1;
   static const UINT32 VNC = 2;
+  static const UINT32 UNIX_LOGIN = 129;
   static const UINT32 EXTERNAL = 130;
 
   static const char *const SIG_NONE;
   static const char *const SIG_VNC;
+  static const char *const SIG_UNIX_LOGIN;
   static const char *const SIG_EXTERNAL;
 
   // Return TightVNC authentication method corresponding to a VNC-style

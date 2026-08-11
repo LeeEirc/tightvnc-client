@@ -707,6 +707,8 @@ StringStorage RemoteViewerCore::getAuthenticationTypeName(UINT32 authenticationT
     return _T("None");
   case AuthDefs::VNC:
     return _T("VNC");
+  case AuthDefs::UNIX_LOGIN:
+    return _T("Unix Login");
   }
   return _T("Unknown type");
 }

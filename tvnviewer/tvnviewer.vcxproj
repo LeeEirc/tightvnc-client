@@ -298,6 +298,7 @@
   <ItemGroup>
     <ClCompile Include="AboutDialog.cpp" />
     <ClCompile Include="AuthenticationDialog.cpp" />
+    <ClCompile Include="UnixLoginDialog.cpp" />
     <ClCompile Include="BuildTime.cpp" />
     <ClCompile Include="ConfigurationDialog.cpp" />
     <ClCompile Include="ConnectionData.cpp" />
@@ -323,11 +324,14 @@
     <ClCompile Include="ViewerInstance.cpp" />
     <ClCompile Include="ViewerMenu.cpp" />
     <ClCompile Include="ViewerVncAuthHandler.cpp" />
+    <ClCompile Include="ViewerUnixLoginAuthHandler.cpp" />
     <ClCompile Include="ViewerWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AboutDialog.h" />
     <ClInclude Include="AuthenticationDialog.h" />
+    <ClInclude Include="UnixLoginDialog.h" />
+    <ClInclude Include="UnixLoginResource.h" />
     <ClInclude Include="BuildTime.h" />
     <ClInclude Include="ConfigurationDialog.h" />
     <ClInclude Include="ConnectionData.h" />
@@ -354,6 +358,7 @@
     <ClInclude Include="ViewerInstance.h" />
     <ClInclude Include="ViewerMenu.h" />
     <ClInclude Include="ViewerVncAuthHandler.h" />
+    <ClInclude Include="ViewerUnixLoginAuthHandler.h" />
     <ClInclude Include="ViewerWindow.h" />
   </ItemGroup>
   <ItemGroup>
@@ -370,6 +375,7 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="tvnviewer.rc" />
+    <ResourceCompile Include="UnixLoginDialog.rc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\client-config-lib\client-config-lib.vcxproj">

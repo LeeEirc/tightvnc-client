@@ -33,6 +33,7 @@ class ConnectionData
 public:
   ConnectionData();
   ConnectionData(const ConnectionData &connectionData);
+  ~ConnectionData();
 
   //
   // This methods is setter and getter of hostname or pair of hostname and port.
@@ -65,6 +66,19 @@ public:
   bool isSetPassword() const;
   void resetPassword();
 
+  // Tight Security UnixLogin credentials are kept separately from the
+  // legacy VNC password. VNC authentication is limited to eight bytes;
+  // UnixLogin must preserve the complete username and password.
+  StringStorage getUnixLoginUsername() const;
+  void getUnixLoginCredentials(StringStorage *username,
+                               StringStorage *password) const;
+  void setUnixLoginUsername(const StringStorage *username);
+  void setUnixLoginCredentials(const StringStorage *username,
+                               const StringStorage *password);
+  bool isSetUnixLoginCredentials() const;
+  void resetUnixLoginPassword();
+  void resetUnixLoginCredentials();
+
   void setIncoming(bool isIncoming);
   bool isIncoming() const;
 
@@ -77,11 +91,17 @@ protected:
   // This flag is true, if password is set.
   bool m_isSetPassword;
 
+  // This flag is true when a complete Tight UnixLogin pair is set.
+  bool m_isSetUnixLoginCredentials;
+
   // This flag is true, if connection is incoming (e.g. listening mode).
   bool m_isIncoming;
 
   // Saved password is crypted.
   StringStorage m_defaultPassword;
+
+  StringStorage m_unixLoginUsername;
+  StringStorage m_unixLoginPassword;
 };
 
 

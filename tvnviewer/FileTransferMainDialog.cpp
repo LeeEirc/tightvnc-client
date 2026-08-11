@@ -62,6 +62,8 @@ int FileTransferMainDialog::onFtTargetFileExists(FileInfo *sourceFileInfo,
                                                  FileInfo *targetFileInfo,
                                                  const TCHAR *pathToTargetFile)
 {
+  m_fileExistDialog.setAppendSupported(
+      m_ftCore->getSupportedOps().isMD5Supported());
   m_fileExistDialog.setFilesInfo(targetFileInfo,
                                  sourceFileInfo,
                                  pathToTargetFile);
