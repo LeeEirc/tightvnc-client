@@ -7,5 +7,8 @@
 #define IDC_UNIX_LOGIN_HOST             1093
 #define IDC_UNIX_LOGIN_USERNAME         1094
 #define IDC_UNIX_LOGIN_PASSWORD         1095
+#ifndef IDC_STATIC
+#define IDC_STATIC                      (-1)
+#endif
 
 #endif
